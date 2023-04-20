@@ -1,0 +1,21 @@
+{
+    "name": "laconica/laconica-sync-instagram",
+    "description": "Laconica instagram Sync package",
+    "authors": [
+        {
+            "name": "Laconica",
+            "email": "hello@laconica.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Laconica\\Sync\\Instagram\\": "src/"
+        }
+    },
+    "require": {
+        "laconica/laconica-sync-core": "dev-main"
+    },
+    "version": "1.0.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
