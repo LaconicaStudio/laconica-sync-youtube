@@ -23,4 +23,26 @@ class Account extends \Laconica\Sync\Core\Sdk\Resource
 
         return $result;
     }
+
+    public function getInstagramList($params = [])
+    {
+        $accounts = $this->getList($params);
+        $foundInstagramAccounts = [];
+        foreach ($accounts as $account) {
+            if (!isset($account['id']) || !isset($account['name'])) {
+                continue;
+            }
+
+            $accountDetails = $this->get($account['id'], ['fields' => 'instagram_business_account']);
+            $instagramAccount = $accountDetails->getInstagramBusinessAccount() ?? null;
+            if (empty($instagramAccount) || empty($instagramAccount['id'])) {
+                continue;
+            }
+
+            $details = $this->get($instagramAccount['id'], ['fields' => 'name']);
+            $foundInstagramAccounts[] = ['name' => $details->getName(), 'id' => $details->getId()];
+        }
+
+        return $foundInstagramAccounts;
+    }
 }

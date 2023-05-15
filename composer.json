@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "laconica/laconica-sync-core": "dev-main"
+        "laconica/laconica-sync-core": "*"
     },
     "version": "1.0.0",
     "minimum-stability": "dev",
