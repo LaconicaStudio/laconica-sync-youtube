@@ -1,6 +1,6 @@
 {
-    "name": "laconica/laconica-sync-instagram",
-    "description": "Laconica instagram Sync package",
+    "name": "laconica/laconica-sync-youtube",
+    "description": "Laconica youtube Sync package",
     "authors": [
         {
             "name": "Laconica",
@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Laconica\\Sync\\Instagram\\": "src/"
+            "Laconica\\Sync\\Youtube\\": "src/"
         }
     },
     "require": {

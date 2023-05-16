@@ -1,6 +1,6 @@
 <?php
 
-namespace Laconica\Sync\Instagram\Sdk;
+namespace Laconica\Sync\Youtube\Sdk;
 
 class Account extends \Laconica\Sync\Core\Sdk\Resource
 {
@@ -9,40 +9,27 @@ class Account extends \Laconica\Sync\Core\Sdk\Resource
         $list = parent::getList($params);
         $result = [];
 
-        if (empty($list) || !isset($list['data'])) {
+        if (empty($list) || !isset($list['items'])) {
             return $result;
         }
 
-        foreach ($list['data'] as $account) {
-            if (empty($account['id']) || empty($account['name'])) {
+        foreach ($list['items'] as $item) {
+            if (!($channelData = $item['snippet'])) {
                 continue;
             }
 
-            $result[] = ['id' => $account['id'], 'name' => $account['name']]; 
+            if (empty($item['id']) || empty($channelData['title'])) {
+                continue;
+            }
+
+            $thumbnail = '';
+            if (!empty($channelData['thumbnails'])) {
+                $thumbnail = $channelData['thumbnails']['medium']['url'] ?? $channelData['thumbnails']['default']['url'] ?? '';
+            }
+
+            $result[] = ['id' => $item['id'], 'name' => $channelData['title'], 'picture' => $thumbnail ]; 
         }
 
         return $result;
-    }
-
-    public function getInstagramList($params = [])
-    {
-        $accounts = $this->getList($params);
-        $foundInstagramAccounts = [];
-        foreach ($accounts as $account) {
-            if (!isset($account['id']) || !isset($account['name'])) {
-                continue;
-            }
-
-            $accountDetails = $this->get($account['id'], ['fields' => 'instagram_business_account']);
-            $instagramAccount = $accountDetails->getInstagramBusinessAccount() ?? null;
-            if (empty($instagramAccount) || empty($instagramAccount['id'])) {
-                continue;
-            }
-
-            $details = $this->get($instagramAccount['id'], ['fields' => 'name']);
-            $foundInstagramAccounts[] = ['name' => $details->getName(), 'id' => $details->getId()];
-        }
-
-        return $foundInstagramAccounts;
     }
 }

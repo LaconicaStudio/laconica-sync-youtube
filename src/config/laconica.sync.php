@@ -1,27 +1,21 @@
 <?php
 return [
     'services' => [
-        'instagram' => [
-            'redirect_endpoint' => 'https://www.facebook.com/v16.0/dialog/oauth',
-            'request_token_endpoint' => 'https://graph.facebook.com/v16.0/oauth/access_token',
-            'token_information_endpoint' => 'https://www.facebook.com/v16.0/dialog/oauth/access_token',
-            'mode' => env('SHOPIFY_MODE', 'development'),
-            'redirect_params' => 'response_type=code&display=popup&auth_type=rerequest&config_id=546398514232015',
-            'client_id' => env('INSTAGRAM_CLIENT_ID', '756792042590706'),
-            'client_secret' => env('INSTAGRAM_CLIENT_SECRET', 'e677c907fd4b2d46de70a8e444448e0d'),
-            'configuration_id' => env('INSTAGRAM_CONFIGURATION_ID', '546398514232015'), // TODO: use this setting instead from hardcode
-             // 'scopes' => 'instagram_basic,pages_show_list,public_profile',
-            'api_prefix' => 'https://graph.facebook.com/v16.0/',
-            'post_configuration_required' => true,
-            'token_type' => 'param',
-            
+        'youtube' => [
+            'redirect_endpoint' => 'https://accounts.google.com/o/oauth2/v2/auth',
+            'request_token_endpoint' => 'https://oauth2.googleapis.com/token',
+            'redirect_params' => 'include_granted_scopes=true&access_type=offline&prompt=consent&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.channel-memberships.creator+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.force-ssl+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.upload+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutubepartner+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutubepartner-channel-audit&auth_type=rerequest&config_id=546398514232015',
+            'request_token_params' => 'access_type=offline&grant_type=authorization_code&prompt=consent',
+            'refresh_token_params' => 'access_type=offline&grant_type=refresh_token&prompt=consent',
+            // 'client_id' => env('YOUTUBE_CLIENT_ID', '1093101282496-jhqbs0njj03lj1117vpee80h6m7v73sc.apps.googleusercontent.com'),
+            // 'client_secret' => env('YOUTUBE_CLIENT_SECRET', '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'),
+            'client_id' => env('YOUTUBE_CLIENT_ID', '478844683299-kl3efvdk3irdurjvs3vhikbrtgn36gc1.apps.googleusercontent.com'),
+            'client_secret' => env('YOUTUBE_CLIENT_SECRET', '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'),
+            'api_prefix' => 'https://youtube.googleapis.com/',
+            'post_configuration_required' => false,            
             'endpoints' => [
-                'shop' => ['list_endpoint' => '/me/accounts/', 'get_endpoint' => '/{id}'], // get accounts - pages
-                'post' => ['create_endpoint' => [ // https://developers.facebook.com/docs/instagram-api/guides/content-publishing/
-                                                'create' => ['endpoint' =>'/{ig-user-id}/media'], 
-                                                'post' => ['endpoint' =>'/{ig-user-id}/media_publish', 'params' => ['creation_id' => '{response.id}']]
-                                                ]
-                ]
+                // 'shop' => ['list_endpoint' => 'youtube/v3/channels/', 'get_endpoint' => '/{id}'], // get accounts - pages
+                'shop' => ['list_endpoint' => ['endpoint' =>'/youtube/v3/channels', 'params' => ['part'=>'snippet', 'contentDetails' => 'statistics', 'mine' => 'true']]],
             ]
         ]
     ]

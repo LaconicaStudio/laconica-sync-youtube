@@ -1,6 +1,6 @@
 <?php
 
-namespace Laconica\Sync\Instagram\Providers;
+namespace Laconica\Sync\Youtube\Providers;
 
 use Laconica\Core\Providers\ConfigProvider as BaseConfigProvider;
 
