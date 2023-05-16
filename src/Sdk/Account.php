@@ -39,8 +39,8 @@ class Account extends \Laconica\Sync\Core\Sdk\Resource
                 continue;
             }
 
-            $details = $this->get($instagramAccount['id'], ['fields' => 'name']);
-            $foundInstagramAccounts[] = ['name' => $details->getName(), 'id' => $details->getId()];
+            $details = $this->get($instagramAccount['id'], ['fields' => 'name,profile_picture_url']);
+            $foundInstagramAccounts[] = ['name' => $details->getName(), 'id' => $instagramAccount['id'], 'picture' => $details->getProfilePictureUrl()];
         }
 
         return $foundInstagramAccounts;
